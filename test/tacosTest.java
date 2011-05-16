@@ -51,4 +51,9 @@ public class tacosTest {
         tablero.quitarTaco(1);
         assertFalse(tablero.getPosicion(1));
     }
+
+    @Test
+    public void seDebePoderMostrarElTableroLleno() {
+        assertTrue(tablero.mostrar());
+    }
 }
