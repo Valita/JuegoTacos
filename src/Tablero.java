@@ -1,10 +1,13 @@
 
+import java.util.ArrayList;
+
 public class Tablero {
 
     private boolean humano;
     private boolean computador;
     private int cantidadTacos;
     private boolean[] listaTacos = new boolean[15];
+    private ArrayList<String> listaComandos = new ArrayList<String>();
 
     public Tablero() {
         humano = false;
@@ -40,12 +43,12 @@ public class Tablero {
     }
 
     public void quitarTaco(int posicion) {
-        listaTacos[posicion] = false;
+        listaTacos[posicion-1] = false;
         cantidadTacos--;
     }
 
-    public boolean getPosicion(int pos) {
-        return false;
+    public boolean getPosicion(int posicion) {
+        return listaTacos[posicion-1];
     }
 
     public boolean mostrar() {
@@ -64,5 +67,33 @@ public class Tablero {
             }
         }
         return true;
+    }
+
+    //Comandos
+    public boolean verificarComando(String comando) {
+        String[] s = comando.split(" ");
+        int pi = Integer.parseInt(s[0]) - 1;
+        int pf = Integer.parseInt(s[2]) - 1;
+        if (listaTacos[pi] && !listaTacos[pf]) { //Falta agregarle funcionalidad
+            return saltar(pi, pf);
+        } else {
+            return false;
+        }
+    }
+
+    public boolean saltar(int pi, int pf) {
+        return true;
+    }
+
+    public void agregarComando(String comando) {
+        if (verificarComando(comando)) {
+            listaComandos.add(comando);
+        } else {
+            System.out.println("Comando invalido");
+        }
+    }
+
+    public int getCantidadComandos() {
+        return listaComandos.size();
     }
 }
