@@ -10,6 +10,7 @@
 <project name="JuegoTacos" default="default" basedir=".">
     <description>Builds, tests, and runs the project JuegoTacos.</description>
     <import file="nbproject/build-impl.xml"/>
+    
     <!--
 
     There exist several targets which are by default empty and which can be 
@@ -59,12 +60,12 @@
 
     An example of overriding the target for project execution could look like this:
 
-        <target name="run" depends="JuegoTacos-impl.jar">
+        <target name="run" depends="JuegoTacos.jar">
             <exec dir="bin" executable="launcher.exe">
                 <arg file="${dist.jar}"/>
             </exec>
         </target>
-
+        
     Notice that the overridden target depends on the jar target and not only on 
     the compile target as the regular run target does. Again, for a list of available 
     properties which you can use, check the target you are overriding in the
