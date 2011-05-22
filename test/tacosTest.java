@@ -11,7 +11,7 @@ public class tacosTest {
 
     @Before
     public void llenarTablero() {
-        tablero.llenar();
+        tablero.llenarTablero();
     }
 
     @Test
@@ -46,7 +46,8 @@ public class tacosTest {
         assertEquals(14, tablero.getCantidadTacos());
     }
 
-    @Test
+
+   @Test
     public void siSeQuitaUnTacoDeUnaPosicionEsaPosicionDebeQuedarVacia() {
         tablero.quitarTaco(3);
         assertFalse(tablero.getPosicion(3));
@@ -54,33 +55,40 @@ public class tacosTest {
 
     @Test
     public void seDebePoderMostrarElTableroLleno() {
-        assertTrue(tablero.mostrar());
+        String cadenaAComparar= " 1   2   3   4   5  \n   6   7   8   9  \n    10  11  12  \n      13  14  \n        15  ";
+        System.out.println(tablero.mostrar());
+        assertEquals(cadenaAComparar,tablero.mostrar());
     }
 
-    //Comandos
     @Test
-    public void siSeIngresaUnComandoVerificarSiEsValido() {
+    public void sePuedeIngresarUncomando(){
         tablero.quitarTaco(3);
-        assertTrue(tablero.verificarComando("1 a 3"));
+        assertTrue(tablero.agregarComando("1 a 3"));
     }
 
-    @Test
-    public void siSeIngresaUnComandoVerificarSiEsInvalido() {
-        assertFalse(tablero.verificarComando("1 a 1"));
-    }
-
-    @Test
-    public void seDebeRealizarUnSaltoSiElComandoEsValido() {
-        assertTrue(tablero.saltar(1, 3));
-    }
-
-//    @Test
-//    public void seDebeVerificarQueLaPosicionFinalDelComandoEstaDisponible() {
-//    }
     @Test
     public void seDebeGuardarLosComandosValidos() {
         tablero.quitarTaco(3);
         tablero.agregarComando("1 a 3");
         assertEquals(1, tablero.getCantidadComandos());
+    }
+
+    @Test
+    public void siSeIngresaUnComandoVerificarSiEsValido() {
+        tablero.quitarTaco(3);
+        assertTrue(tablero.agregarComando("1 a 3"));
+    }
+
+    @Test
+    public void siSeIngresaUnComandoVerificarSiEsInvalido() {
+        assertFalse(tablero.agregarComando("1 a 1"));
+    }
+
+    @Test
+    public void siElComandoEsValidoSeDebeEjecutarElSaltoDelTaco() {
+        tablero.quitarTaco(3);
+        tablero.agregarComando("5 a 3");
+        tablero.mostrar();
+        assertEquals(13,tablero.getCantidadTacos());
     }
 }

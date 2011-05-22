@@ -2,7 +2,11 @@
 import java.util.ArrayList;
 
 public class Tablero {
+    private static final int FIN_LINEA_CUATRO = 13;
+    private static final int FIN_LINEA_TRES = 11;
+    private static final int FIN_LINEA_DOS = 8;
 
+    private static final int FIN_LINEA_UNO = 4;
     private boolean humano;
     private boolean computador;
     private int cantidadTacos;
@@ -35,7 +39,7 @@ public class Tablero {
         return cantidadTacos;
     }
 
-    public void llenar() {
+    public void llenarTablero() {
         for (int i = 0; i < 15; i++) {
             listaTacos[i] = true;
         }
@@ -43,57 +47,69 @@ public class Tablero {
     }
 
     public void quitarTaco(int posicion) {
-        listaTacos[posicion-1] = false;
+        listaTacos[posicion - 1] = false;
         cantidadTacos--;
     }
 
     public boolean getPosicion(int posicion) {
-        return listaTacos[posicion-1];
+        return listaTacos[posicion - 1];
     }
 
-    public boolean mostrar() {
+    public String mostrar() {
+        String cadenaTablero= "";
         int cont = 0;
-        for (int i = 0; i < 15; i++) {
-            if (listaTacos[i] == true) {
-                System.out.print('*');
-            }
-            System.out.print(" ");
-            if (i == 4 || i == 8 || i == 11 || i == 13) {
-                System.out.println();
-                cont++;
-                for (int j = 0; j < cont; j++) {
-                    System.out.print(" ");
+        if (cantidadTacos > 0) {
+            for (int posicion = 0; posicion < 15; posicion++) {
+                if (listaTacos[posicion] == true) {
+                    if(posicion < 9)  cadenaTablero += " " + String.valueOf(posicion+1);
+                    else cadenaTablero += String.valueOf(posicion+1);
+                } else {
+                    cadenaTablero +="  ";
+                }
+                cadenaTablero +="  ";
+                if (posicion == FIN_LINEA_UNO || posicion == FIN_LINEA_DOS || posicion == FIN_LINEA_TRES || posicion == FIN_LINEA_CUATRO) {
+                    cadenaTablero +="\n";
+                    cont++;
+                    for (int j = 0; j < cont; j++) {
+                        cadenaTablero +="  ";
+                    }
                 }
             }
-        }
-        return true;
+        } 
+        return cadenaTablero;
     }
 
-    //Comandos
-    public boolean verificarComando(String comando) {
+    public boolean agregarComando(String comando) {
+        if (validarComando(comando)) {
+            listaComandos.add(comando);
+            return true;
+        } else {
+            System.out.println("Comando invalido");
+            return false;
+        }
+    }
+
+    private boolean validarComando(String comando) {
         String[] s = comando.split(" ");
-        int pi = Integer.parseInt(s[0]) - 1;
-        int pf = Integer.parseInt(s[2]) - 1;
-        if (listaTacos[pi] && !listaTacos[pf]) { //Falta agregarle funcionalidad
-            return saltar(pi, pf);
+        int pInicialSalto = Integer.parseInt(s[0]) - 1;
+        int pFinalSalto = Integer.parseInt(s[2]) - 1;
+        int pMedioSalto = (pInicialSalto + pFinalSalto) / 2;
+        if (listaTacos[pInicialSalto] && !listaTacos[pFinalSalto] && listaTacos[pMedioSalto]) {
+            return saltar(pInicialSalto, pFinalSalto, pMedioSalto);
         } else {
             return false;
         }
     }
 
-    public boolean saltar(int pi, int pf) {
-        return true;
-    }
-
-    public void agregarComando(String comando) {
-        if (verificarComando(comando)) {
-            listaComandos.add(comando);
-        } else {
-            System.out.println("Comando invalido");
-        }
-    }
-
     public int getCantidadComandos() {
         return listaComandos.size();
+    }
+
+    public boolean saltar(int pInicial, int pFinal, int pMedio) {
+        listaTacos[pInicial] = false;
+        listaTacos[pMedio] = false;
+        listaTacos[pFinal] = true;
+        cantidadTacos--;
+        return true;
     }
 }
