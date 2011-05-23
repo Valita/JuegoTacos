@@ -3,9 +3,9 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class tacosTest {
+public class TableroTest {
 
-    public tacosTest() {
+    public TableroTest() {
     }
     Tablero tablero = new Tablero();
 
@@ -91,4 +91,6 @@ public class tacosTest {
         tablero.mostrar();
         assertEquals(13,tablero.getCantidadTacos());
     }
+
+    
 }
