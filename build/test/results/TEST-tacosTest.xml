@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite errors="0" failures="0" hostname="Vale" name="tacosTest" tests="11" time="0.094" timestamp="2011-05-22T19:51:47">
+<testsuite errors="0" failures="0" hostname="Vale" name="tacosTest" tests="12" time="0.094" timestamp="2011-05-23T12:42:50">
   <properties>
     <property name="libs.jsp-compiler.javadoc" value="" />
     <property name="javac.test.classpath" value=":build/classes:C:\Program Files (x86)\NetBeans 6.9.1\java\modules\ext\junit-3.8.2.jar:C:\Program Files (x86)\NetBeans 6.9.1\platform\modules\ext\junit-4.5.jar" />
@@ -382,7 +382,7 @@
     <property name="libs.metro.classpath" value="C:\Program Files (x86)\NetBeans 6.9.1\ide\modules\ext\jaxb\activation.jar;C:\Program Files (x86)\NetBeans 6.9.1\enterprise\modules\ext\metro\webservices-api.jar;C:\Program Files (x86)\NetBeans 6.9.1\enterprise\modules\ext\metro\webservices-extra-api.jar;C:\Program Files (x86)\NetBeans 6.9.1\enterprise\modules\ext\metro\webservices-extra.jar;C:\Program Files (x86)\NetBeans 6.9.1\enterprise\modules\ext\metro\webservices-rt.jar;C:\Program Files (x86)\NetBeans 6.9.1\enterprise\modules\ext\metro\webservices-tools.jar" />
     <property name="libs.restlib.maven-pom" value="" />
     <property name="libs.DataBindingME.javadoc" value="C:\Program Files (x86)\NetBeans 6.9.1\mobility\modules\docs\netbeans_databindingme-api.zip" />
-    <property name="java.class.path" value="C:\Proyectos\JuegoTacos\build\classes;C:\Program Files (x86)\NetBeans 6.9.1\java\modules\ext\junit-3.8.2.jar;C:\Program Files (x86)\NetBeans 6.9.1\platform\modules\ext\junit-4.5.jar;C:\Proyectos\JuegoTacos\build\test\classes;C:\Proyectos\JuegoTacos;C:\Program Files (x86)\Java\jre6\lib\ext\QTJava.zip;C:\Program Files (x86)\apache-ant-1.8.2\lib\ant-launcher.jar;C:\Program Files (x86)\apache-ant-1.8.2\lib\ant.jar;C:\Program Files (x86)\apache-ant-1.8.2\lib\ant-junit.jar;C:\Program Files (x86)\apache-ant-1.8.2\lib\ant-junit4.jar" />
+    <property name="java.class.path" value="C:\Proyectos\JuegoTacos\build\classes;C:\Program Files (x86)\NetBeans 6.9.1\java\modules\ext\junit-3.8.2.jar;C:\Program Files (x86)\NetBeans 6.9.1\platform\modules\ext\junit-4.5.jar;C:\Proyectos\JuegoTacos\build\test\classes;C:\Proyectos\JuegoTacos;C:\Program Files (x86)\Java\jre6\lib\ext\QTJava.zip;C:\Program Files (x86)\apache-ant-1.8.2\lib\junit-3.8.2.jar;C:\Program Files (x86)\apache-ant-1.8.2\lib\ant-launcher.jar;C:\Program Files (x86)\apache-ant-1.8.2\lib\ant.jar;C:\Program Files (x86)\apache-ant-1.8.2\lib\ant-junit.jar;C:\Program Files (x86)\apache-ant-1.8.2\lib\ant-junit4.jar" />
     <property name="do.mkdist" value="true" />
     <property name="libs.absolutelayout.src" value="" />
     <property name="libs.cdc-pp-awt-layout.maven-pom" value="" />
@@ -432,21 +432,24 @@
     <property name="awt.toolkit" value="sun.awt.windows.WToolkit" />
     <property name="jcplatform.javacard_default" value="C:\Users\Valita\.netbeans\6.9\config\Services\Platforms\org-netbeans-api-java-Platform\javacard_default.jcplatform" />
   </properties>
-  <testcase classname="tacosTest" name="comenzandoElJuegoNoDeboTenerNingunJugadorDefinido" time="0.0040" />
+  <testcase classname="tacosTest" name="comenzandoElJuegoNoDeboTenerNingunJugadorDefinido" time="0.015" />
   <testcase classname="tacosTest" name="alElegirUnJugadorElTableroDebeSaberQueEseJugadorEstaSeleccionado" time="0.0" />
   <testcase classname="tacosTest" name="alCrearUntableroDebeEstarVacio" time="0.0" />
   <testcase classname="tacosTest" name="alComenzarElJuegoElTableroDebeEstarLleno" time="0.0" />
   <testcase classname="tacosTest" name="siSeQuitaUnTacoLaCantidadDeTacosDebeDisminuir" time="0.0" />
   <testcase classname="tacosTest" name="siSeQuitaUnTacoDeUnaPosicionEsaPosicionDebeQuedarVacia" time="0.0" />
-  <testcase classname="tacosTest" name="seDebePoderMostrarElTableroLleno" time="0.0010" />
+  <testcase classname="tacosTest" name="seDebePoderMostrarElTableroLleno" time="0.0" />
+  <testcase classname="tacosTest" name="sePuedeIngresarUncomando" time="0.0" />
+  <testcase classname="tacosTest" name="seDebeGuardarLosComandosValidos" time="0.0" />
   <testcase classname="tacosTest" name="siSeIngresaUnComandoVerificarSiEsValido" time="0.0" />
   <testcase classname="tacosTest" name="siSeIngresaUnComandoVerificarSiEsInvalido" time="0.0" />
-  <testcase classname="tacosTest" name="seDebeRealizarUnSaltoSiElComandoEsValido" time="0.0010" />
-  <testcase classname="tacosTest" name="seDebeGuardarLosComandosValidos" time="0.0" />
-  <system-out><![CDATA[* * * * * 
- * * * * 
-  * * * 
-   * * 
-    * ]]></system-out>
+  <testcase classname="tacosTest" name="siElComandoEsValidoSeDebeEjecutarElSaltoDelTaco" time="0.0" />
+  <system-out><![CDATA[ 1   2   3   4   5  
+   6   7   8   9  
+    10  11  12  
+      13  14  
+        15  
+Comando invalido
+]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
