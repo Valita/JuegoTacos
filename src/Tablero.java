@@ -81,6 +81,7 @@ public class Tablero {
 
             listaTacos.add(new Taco());
             listaTacos.get(i).definirExistencia(true);
+            listaTacos.get(i).definirPosicion(i+1);
         }
         colorearTacos();
         cantidadTacos = 15;
@@ -119,10 +120,11 @@ public class Tablero {
     public String imprimirPosiciones(int cantidadPosiciones, int posInicial) {
         String imprimir = " ";
         for (int pos = posInicial; pos < cantidadPosiciones + posInicial; pos++) {
-            if (pos < 10) {
-                imprimir += pos + "  ";
+            imprimir += listaTacos.get(pos).obtenerPosicion();
+            if (pos < 9) {
+                imprimir +="  ";
             } else {
-                imprimir += pos + " ";
+                imprimir += " ";
             }
         }
         imprimir += "\n";
@@ -131,36 +133,32 @@ public class Tablero {
 
     public String mostrar() {
         String cadenaTablero = "";
-        cadenaTablero += imprimirLetras(5, 1);
-        cadenaTablero += imprimirPosiciones(5, 1);
+        cadenaTablero += imprimirLetras(5, 0);
+        cadenaTablero += imprimirPosiciones(5, 0);
         cadenaTablero += " ";
         cadenaTablero += imprimirLetras(4, FIN_LINEA_UNO + 1);
         cadenaTablero += " ";
-        cadenaTablero += imprimirPosiciones(4, FIN_LINEA_UNO + 2);
+        cadenaTablero += imprimirPosiciones(4, FIN_LINEA_UNO + 1);
         cadenaTablero += "  ";
         cadenaTablero += imprimirLetras(3, FIN_LINEA_DOS + 1);
         cadenaTablero += "  ";
-        cadenaTablero += imprimirPosiciones(3, FIN_LINEA_DOS + 2);
+        cadenaTablero += imprimirPosiciones(3, FIN_LINEA_DOS + 1);
         cadenaTablero += "   ";
         cadenaTablero += imprimirLetras(2, FIN_LINEA_TRES + 1);
         cadenaTablero += "   ";
-        cadenaTablero += imprimirPosiciones(2, FIN_LINEA_TRES + 2);
+        cadenaTablero += imprimirPosiciones(2, FIN_LINEA_TRES + 1);
         cadenaTablero += "    ";
         cadenaTablero += imprimirLetras(1, FIN_LINEA_CUATRO + 1);
         cadenaTablero += "    ";
-        cadenaTablero += imprimirPosiciones(1, FIN_LINEA_CUATRO + 2);
+        cadenaTablero += imprimirPosiciones(1, FIN_LINEA_CUATRO + 1);
         return cadenaTablero;
     }
 
     public boolean agregarComando(String comando) {
-        if (verificarEscrituraComando(comando)) {
-            if (validarComando(comando)) {
-                listaComandos.add(comando);
-                return true;
-            } else {
-                System.out.println("Comando invalido");
-                return false;
-            }
+
+        if (validarComando(comando)) {
+            listaComandos.add(comando);
+            return true;
         } else {
             System.out.println("Comando invalido");
             return false;
@@ -193,54 +191,26 @@ public class Tablero {
     }
 
     private boolean validarComando(String comando) {
-        String[] s = comando.split(" ");
-        int pInicialSalto = Integer.parseInt(s[0]) - 1;
-        int pFinalSalto = Integer.parseInt(s[2]) - 1;
-        int pMedioSalto;
-        int mismaLinea;
-        int cambio = 0;
-        mismaLinea = pFinalSalto - pInicialSalto;
-        if (mismaLinea == 2 || mismaLinea == -2) {
-            pMedioSalto = (pInicialSalto + pFinalSalto) / 2;
-        } else {
-            pMedioSalto = (pInicialSalto + pFinalSalto) / 2 + 1;
-        }
-        if (listaTacos.get(pInicialSalto).obtenerExistencia() && !listaTacos.get(pFinalSalto).obtenerExistencia() && listaTacos.get(pMedioSalto).obtenerExistencia()) {
-            if (pInicialSalto > pFinalSalto) {
-                cambio = pFinalSalto;
-                pFinalSalto = pInicialSalto;
-                pInicialSalto = cambio;
+        if (verificarEscrituraComando(comando)) {
+            String[] jugada = comando.split(" ");
+            String[] salto;
+
+            int pInicialSalto = Integer.parseInt(jugada[0]);
+            int pFinalSalto = Integer.parseInt(jugada[2]);
+            int pMedioSalto;
+
+            String saltosPosibles = listaTacos.get(pInicialSalto-1).obtenerSaltos();
+            jugada = saltosPosibles.split("/");
+            for (String s : jugada) {
+                salto = s.split(",");
+                if(pFinalSalto == Integer.parseInt(salto[0])){
+                    pMedioSalto = Integer.parseInt(salto[1]);
+                    saltar(pInicialSalto,pFinalSalto,pMedioSalto);
+                    return true;
+                }
             }
-            if (mismaLinea == 2 || mismaLinea == -2) {
-                if (cambio == 0) {
-                    return saltar(pInicialSalto, pFinalSalto, pMedioSalto);
-                } else {
-                    return saltar(pFinalSalto, pInicialSalto, pMedioSalto);
-                }
-            } else {
-                if (pInicialSalto <= FIN_LINEA_UNO && pFinalSalto > FIN_LINEA_DOS && pFinalSalto <= FIN_LINEA_TRES) {
-                    if (cambio == 0) {
-                        return saltar(pInicialSalto, pFinalSalto, pMedioSalto);
-                    } else {
-                        return saltar(pFinalSalto, pInicialSalto, pMedioSalto);
-                    }
-                }
-                if (pInicialSalto <= FIN_LINEA_DOS && pFinalSalto > FIN_LINEA_TRES && pFinalSalto <= FIN_LINEA_CUATRO) {
-                    if (cambio == 0) {
-                        return saltar(pInicialSalto, pFinalSalto, pMedioSalto);
-                    } else {
-                        return saltar(pFinalSalto, pInicialSalto, pMedioSalto);
-                    }
-                }
-                if (pInicialSalto <= FIN_LINEA_TRES && pFinalSalto > FIN_LINEA_CUATRO) {
-                    if (cambio == 0) {
-                        return saltar(pInicialSalto, pFinalSalto, pMedioSalto);
-                    } else {
-                        return saltar(pFinalSalto, pInicialSalto, pMedioSalto);
-                    }
-                }
-                return false;
-            }
+            return false;
+
         } else {
             return false;
         }
@@ -251,10 +221,13 @@ public class Tablero {
     }
 
     public boolean saltar(int pInicial, int pFinal, int pMedio) {
-        listaTacos.get(pInicial).definirExistencia(false);
-        listaTacos.get(pMedio).definirExistencia(false);
-        listaTacos.get(pFinal).definirExistencia(true);
-        listaTacos.get(pFinal).definirColor(listaTacos.get(pInicial).obtenerColor());
+        listaTacos.get(pFinal-1).definirColor(listaTacos.get(pInicial-1).obtenerColor());
+        listaTacos.get(pInicial-1).definirExistencia(false);
+        listaTacos.get(pInicial-1).definirColor("0");
+        listaTacos.get(pMedio-1).definirExistencia(false);
+        listaTacos.get(pMedio-1).definirColor("0");
+        listaTacos.get(pFinal-1).definirExistencia(true);
+        
         cantidadTacos--;
         return true;
     }
