@@ -28,7 +28,7 @@ public class Juego {
             listaJugadas.add(jugada);
             return true;
         } else {
-            System.out.println("Comando invalido");
+            System.out.println("Jugada invalida");
             return false;
         }
     }
@@ -70,8 +70,6 @@ public class Juego {
     }
 
     private boolean verificarEscrituraJugada(String jugada) {
-        int parteUno;
-        int parteDos;
         String[] entrada = jugada.split(" ");
         if (entrada.length != 3) {
             return false;
@@ -81,8 +79,8 @@ public class Juego {
         }
 
         try {
-            parteUno = Integer.parseInt(entrada[0]);
-            parteDos = Integer.parseInt(entrada[2]);
+            int parteUno = Integer.parseInt(entrada[0]);
+            int parteDos = Integer.parseInt(entrada[2]);
             return (parteUno > 0 && parteDos > 0 && parteUno < 16 && parteDos < 16);
         } catch (NumberFormatException e) {
             return false;
@@ -93,7 +91,7 @@ public class Juego {
         return listaJugadas.size();
     }
 
-    Tablero getTablero() {
+    public Tablero getTablero() {
         return tablero;
     }
 
@@ -106,5 +104,18 @@ public class Juego {
         } else {
             return false;
         }
+    }
+
+    public boolean elegirAgujero(int pos) {
+        if (validarPosicionAgujero(pos)) {
+            tablero.quitarTaco(pos - 1);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private boolean validarPosicionAgujero(int pos) {
+        return (pos != 1 && pos != 5 && pos != 15);
     }
 }

@@ -74,4 +74,17 @@ public class JuegoTest {
         tablero.quitarTaco(14);
         assertTrue(jugada.juegoTerminado());
     }
+
+    @Test
+    public void elJugadorPersonaDebePoderElegirDondeEstaraElAgujeroParaEmpezar() {
+        jugada.elegirAgujero(3);
+        assertFalse(tablero.getPosicion(2));
+    }
+
+    @Test
+    public void elJugadorNoDebePoderElegirComoAgujeroParaEmpezarElJuegoNingunaEsquina() {
+        assertFalse(jugada.elegirAgujero(1));
+        assertFalse(jugada.elegirAgujero(5));
+        assertFalse(jugada.elegirAgujero(15));
+    }
 }

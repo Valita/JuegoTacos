@@ -50,17 +50,4 @@ public class TableroTest {
             assertNotSame("", tablero.getColorTaco(1));
         }
     }
-
-    @Test
-    public void elJugadorPersonaDebePoderElegirDondeEstaraElAgujeroParaEmpezar() {
-        tablero.elegirAgujero(3);
-        assertFalse(tablero.getPosicion(3));
-    }
-
-    @Test
-    public void elJugadorNoDebePoderElegirComoAgujeroParaEmpezarElJuegoNingunaEsquina() {
-        assertFalse(tablero.elegirAgujero(1));
-        assertFalse(tablero.elegirAgujero(5));
-        assertFalse(tablero.elegirAgujero(15));
-    }
 }

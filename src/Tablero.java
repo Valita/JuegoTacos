@@ -25,18 +25,14 @@ public class Tablero {
             if (contadorRojo < 5 && randomico == 1) {
                 listaTacos.get(i).definirColor("R");
                 contadorRojo++;
+            } else if (contadorAmarillo < 5 && randomico == 2) {
+                listaTacos.get(i).definirColor("A");
+                contadorAmarillo++;
+            } else if (contadorBlanco < 5 && randomico == 3) {
+                listaTacos.get(i).definirColor("B");
+                contadorBlanco++;
             } else {
-                if (contadorAmarillo < 5 && randomico == 2) {
-                    listaTacos.get(i).definirColor("A");
-                    contadorAmarillo++;
-                } else {
-                    if (contadorBlanco < 5 && randomico == 3) {
-                        listaTacos.get(i).definirColor("B");
-                        contadorBlanco++;
-                    } else {
-                        i--;
-                    }
-                }
+                i--;
             }
         }
         for (int i = 0; i < 15; i++) {
@@ -53,7 +49,6 @@ public class Tablero {
 
     public void llenarTablero() {
         for (int i = 0; i < 15; i++) {
-
             listaTacos.add(new Taco());
             listaTacos.get(i).definirExistencia(true);
             listaTacos.get(i).definirPosicion(i + 1);
@@ -137,19 +132,6 @@ public class Tablero {
 
     public String obtenerSaltos(int i) {
         return listaTacos.get(i).obtenerSaltos();
-    }
-
-    public boolean elegirAgujero(int pos) {
-        if (validarPosicionAgujero(pos)) {
-            quitarTaco(pos);
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public boolean validarPosicionAgujero(int pos) {
-        return (pos != 1 && pos != 5 && pos != 15);
     }
 
     public boolean terminado() {
