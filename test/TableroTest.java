@@ -46,8 +46,7 @@ public class TableroTest {
         assertEquals(14, tablero.getCantidadTacos());
     }
 
-
-   @Test
+    @Test
     public void siSeQuitaUnTacoDeUnaPosicionEsaPosicionDebeQuedarVacia() {
         tablero.quitarTaco(3);
         assertFalse(tablero.getPosicion(3));
@@ -56,20 +55,21 @@ public class TableroTest {
     @Test
     public void seDebePoderMostrarElTableroLleno() {
         System.out.println(tablero.mostrar());
-        assertNotSame("",tablero.mostrar());
-        assertEquals(1,1);
+        assertNotSame("", tablero.mostrar());
+        assertEquals(1, 1);
     }
 
     @Test
-    public void sePuedeIngresarUncomando(){
+    public void sePuedeIngresarUncomando() {
         tablero.quitarTaco(3);
         assertTrue(tablero.agregarComando("1 a 3"));
     }
 
     @Test
-    public void siUnTacoExisteEnUnaPosicionDebeTenerUnColor()
-    {
-        if(tablero.getPosicion(1)) assertNotSame("",tablero.getColorTaco(1));
+    public void siUnTacoExisteEnUnaPosicionDebeTenerUnColor() {
+        if (tablero.getPosicion(1)) {
+            assertNotSame("", tablero.getColorTaco(1));
+        }
     }
 
     @Test
@@ -86,7 +86,7 @@ public class TableroTest {
     }
 
     @Test
-    public void siSeIngresaUnComandoVerificarSiLaJugadaEsInvalida(){
+    public void siSeIngresaUnComandoVerificarSiLaJugadaEsInvalida() {
         assertFalse(tablero.agregarComando("1 a 1"));
     }
 
@@ -101,14 +101,30 @@ public class TableroTest {
         tablero.quitarTaco(4);
         tablero.agregarComando("11 a 4");
         System.out.println(tablero.mostrar());
-        assertEquals(13,tablero.getCantidadTacos());
+        assertEquals(13, tablero.getCantidadTacos());
 
     }
 
     @Test
-    public void elJugadorPersonaDebePoderElegirDondeEstaraElAgujeroParaEmpezar()
-    {
-        
+    public void elJugadorPersonaDebePoderElegirDondeEstaraElAgujeroParaEmpezar() {
+        tablero.elegirAgujero(3);
+        assertFalse(tablero.getPosicion(3));
     }
-    
+
+    @Test
+    public void elJugadorNoDebePoderElegirComoAgujeroParaEmpezarElJuegoNingunaEsquina() {
+        assertFalse(tablero.elegirAgujero(1));
+        assertFalse(tablero.elegirAgujero(5));
+        assertFalse(tablero.elegirAgujero(15));
+    }
+
+    @Test
+    public void unJugadorDebeSaberCuandoElJuegoATerminado() {
+        for(int i =1 ; i<=12 ; i++)
+        {
+            tablero.quitarTaco(i);
+        }
+        tablero.quitarTaco(15);
+        assertTrue(tablero.juegoTerminado());
+    }
 }
