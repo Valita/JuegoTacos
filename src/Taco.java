@@ -9,7 +9,12 @@
  */
 public class Taco {
     private String color;
-    boolean existe = false;
+    private boolean existe = false;
+
+    public Taco()
+    {
+        existe = false;
+    }
 
     public String obtenerColor()
     {
