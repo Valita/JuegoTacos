@@ -35,26 +35,38 @@ public class Juego {
 
     private boolean validarJugada(String j) {
         if (verificarEscrituraJugada(j)) {
-            String[] jugada = j.split(" ");
+            String[] jugada;
 
-            int pInicialSalto = Integer.parseInt(jugada[0]);
-            int pFinalSalto = Integer.parseInt(jugada[2]);
+            int pInicialSalto = primerCaracter(j);
+            int pFinalSalto = tercerCaracter(j);
             int pMedioSalto;
 
             String saltosPosibles = tablero.obtenerSaltos(pInicialSalto - 1);
             jugada = saltosPosibles.split("/");
-
-            String[] salto;
             for (String s : jugada) {
-                salto = s.split(",");
-                if (pFinalSalto == Integer.parseInt(salto[0])) {
-                    pMedioSalto = Integer.parseInt(salto[1]);
+                if (pFinalSalto == primerCaracter(s)) {
+                    pMedioSalto = segundoCaracter(s);
                     tablero.saltar(pInicialSalto, pFinalSalto, pMedioSalto);
                     return true;
                 }
             }
         }
         return false;
+    }
+
+    private int primerCaracter(String j) {
+        String[] jugada = j.split(" ");
+        return Integer.parseInt(jugada[0]);
+    }
+
+    private int tercerCaracter(String j) {
+        String[] jugada = j.split(" ");
+        return Integer.parseInt(jugada[2]);
+    }
+
+    private int segundoCaracter(String j) {
+        String[] jugada = j.split(" ");
+        return Integer.parseInt(jugada[1]);
     }
 
     private boolean verificarEscrituraJugada(String jugada) {
@@ -83,5 +95,16 @@ public class Juego {
 
     Tablero getTablero() {
         return tablero;
+    }
+
+    public boolean juegoTerminado() {
+        if (tablero.getCantidadTacos() == 1) {
+            return true;
+        }
+        if (tablero.getCantidadTacos() <= 4) {
+            return tablero.terminado();
+        } else {
+            return false;
+        }
     }
 }

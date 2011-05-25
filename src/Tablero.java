@@ -126,17 +126,45 @@ public class Tablero {
     }
 
     public void saltar(int pInicial, int pFinal, int pMedio) {
-        listaTacos.get(pFinal - 1).definirColor(listaTacos.get(pInicial - 1).obtenerColor());
-        listaTacos.get(pInicial - 1).definirExistencia(false);
+        listaTacos.get(pFinal - 1).definirColor(getColorTaco(pInicial));
+        quitarTaco(pInicial);
+        cantidadTacos++;
         listaTacos.get(pInicial - 1).definirColor("0");
-        listaTacos.get(pMedio - 1).definirExistencia(false);
+        quitarTaco(pMedio);
         listaTacos.get(pMedio - 1).definirColor("0");
         listaTacos.get(pFinal - 1).definirExistencia(true);
-
-        cantidadTacos--;
     }
 
     public String obtenerSaltos(int i) {
         return listaTacos.get(i).obtenerSaltos();
+    }
+
+    public boolean elegirAgujero(int pos) {
+        if (validarPosicionAgujero(pos)) {
+            quitarTaco(pos);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean validarPosicionAgujero(int pos) {
+        return (pos != 1 && pos != 5 && pos != 15);
+    }
+
+    public boolean terminado() {
+        for (Taco t : listaTacos) {
+            if (t.obtenerExistencia()) {
+                String[] jugada = t.obtenerSaltos().split("/");
+                for (String s : jugada) {
+                    String[] pos = s.split(" ");
+                    int p = Integer.parseInt(pos[1]) - 1;
+                    if (this.getPosicion(p)) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
     }
 }

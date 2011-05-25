@@ -11,7 +11,7 @@ public class JuegoTest {
     Tablero tablero;
 
     @Before
-    public void llenarTablero () {
+    public void llenarTablero() {
         tablero = jugada.getTablero();
     }
 
@@ -34,7 +34,7 @@ public class JuegoTest {
         assertTrue(jugada.agregarJugada("1 a 3"));
     }
 
-     @Test
+    @Test
     public void siSeIngresaUnaJugadaVerificarSiEsValida() {
         tablero.quitarTaco(3);
         assertTrue(jugada.agregarJugada("1 a 3"));
@@ -64,5 +64,14 @@ public class JuegoTest {
         jugada.agregarJugada("11 a 4");
         System.out.println(tablero.mostrar());
         assertEquals(13, tablero.getCantidadTacos());
+    }
+
+    @Test
+    public void unJugadorDebeSaberCuandoElJuegoATerminado() {
+        for (int i = 0; i <= 11; i++) {
+            tablero.quitarTaco(i);
+        }
+        tablero.quitarTaco(14);
+        assertTrue(jugada.juegoTerminado());
     }
 }
