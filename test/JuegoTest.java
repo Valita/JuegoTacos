@@ -59,8 +59,8 @@ public class JuegoTest {
 
     @Test
     public void siLaJugadaEsValidaSeDebeEjecutarElSaltoDelTaco() {
+        jugada.elegirAgujero(4);
         System.out.println(tablero.mostrar());
-        tablero.quitarTaco(4);
         jugada.agregarJugada("11 a 4");
         System.out.println(tablero.mostrar());
         assertEquals(13, tablero.getCantidadTacos());
@@ -73,5 +73,18 @@ public class JuegoTest {
         }
         tablero.quitarTaco(14);
         assertTrue(jugada.juegoTerminado());
+    }
+
+    @Test
+    public void elJugadorPersonaDebePoderElegirDondeEstaraElAgujeroParaEmpezar() {
+        jugada.elegirAgujero(3);
+        assertFalse(tablero.getPosicion(2));
+    }
+
+    @Test
+    public void elJugadorNoDebePoderElegirComoAgujeroParaEmpezarElJuegoNingunaEsquina() {
+        assertFalse(jugada.elegirAgujero(1));
+        assertFalse(jugada.elegirAgujero(5));
+        assertFalse(jugada.elegirAgujero(15));
     }
 }
