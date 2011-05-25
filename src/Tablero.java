@@ -149,4 +149,31 @@ public class Tablero {
         }
         return true;
     }
+
+    public int posicionVaciaAJugar() {
+        ArrayList<Integer> vacios = new ArrayList<Integer>();
+        int cantidadVacios=0;
+        int elegible;
+        int posicion=0;
+        boolean existejugada = false;
+
+        for (Taco vacio : listaTacos) {
+            if (vacio.obtenerExistencia() == false) {
+                vacios.add(vacio.obtenerPosicion());
+                cantidadVacios++;
+                existejugada = true;
+            }
+        }
+        if (!existejugada) {
+            return 0;
+        }
+        if (cantidadTacos != 14) {
+            elegible = (int) (Math.random() * (cantidadVacios));
+            posicion = vacios.get(elegible);
+        }
+        if(cantidadTacos == 14) {
+            posicion = vacios.get(0);
+        }
+        return posicion;
+    }
 }

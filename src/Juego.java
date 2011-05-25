@@ -118,4 +118,57 @@ public class Juego {
     private boolean validarPosicionAgujero(int pos) {
         return (pos != 1 && pos != 5 && pos != 15);
     }
+
+    private int posicionParaMover(int vacio) {
+        String saltosPosibles = tablero.obtenerSaltos(vacio - 1);
+        String[] saltos = saltosPosibles.split("/");
+        ArrayList<Integer> elegibles = new ArrayList<Integer>();
+        int tacoAMover;
+        int tacoMedio;
+        int contador = 0;
+        int elegido;
+
+        for (String salto : saltos) {
+            tacoAMover = primerCaracter(salto);
+            tacoMedio = segundoCaracter(salto);
+            if (tablero.getPosicion(tacoAMover) && tablero.getPosicion(tacoMedio)) {
+                elegibles.add(tacoAMover);
+                contador++;
+            }
+        }
+        if (contador == 1) {
+            return elegibles.get(0);
+
+        }
+        if (contador == 0) {
+            return 0;
+        } else {
+            elegido = (int) (Math.random() * contador);
+            return elegibles.get(elegido);
+        }
+    }
+
+    private String obtenerJugada() {
+        int jugarVacio = 0;
+        int jugarTaco = 0;
+        String jugada = "";
+        while (jugarTaco == 0) {
+            jugarVacio = tablero.posicionVaciaAJugar();
+            if (jugarVacio != 0) {
+                jugarTaco = posicionParaMover(jugarVacio);
+            } else {
+                jugarTaco = 0;
+            }
+        }
+        jugada += Integer.toString(jugarTaco) + " a " + Integer.toString(jugarVacio);
+        return jugada;
+    }
+
+    public void computadorJuega() {
+        String jugada;
+        while (!juegoTerminado()) {
+            jugada = obtenerJugada();
+            this.agregarJugada(jugada);
+        }
+    }
 }

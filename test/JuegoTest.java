@@ -7,61 +7,61 @@ public class JuegoTest {
 
     public JuegoTest() {
     }
-    Juego jugada = new Juego();
+    Juego juego = new Juego();
     Tablero tablero;
 
     @Before
     public void llenarTablero() {
-        tablero = jugada.getTablero();
+        tablero = juego.getTablero();
     }
 
     @Test
     public void comenzandoElJuegoNoDeboTenerNingunJugadorDefinido() {
-        assertFalse(jugada.jugadorHumano());
+        assertFalse(juego.jugadorHumano());
     }
 
     @Test
     public void alElegirUnJugadorElJuegoDebeSaberQueEseJugadorEstaSeleccionado() {
-        jugada.elegirJugador("Computador");
-        assertFalse(jugada.jugadorHumano());
-        jugada.elegirJugador("Humano");
-        assertTrue(jugada.jugadorHumano());
+        juego.elegirJugador("Computador");
+        assertFalse(juego.jugadorHumano());
+        juego.elegirJugador("Humano");
+        assertTrue(juego.jugadorHumano());
     }
 
     @Test
     public void sePuedeIngresarUnaJugada() {
         tablero.quitarTaco(3);
-        assertTrue(jugada.agregarJugada("1 a 3"));
+        assertTrue(juego.agregarJugada("1 a 3"));
     }
 
     @Test
     public void siSeIngresaUnaJugadaVerificarSiEsValida() {
         tablero.quitarTaco(3);
-        assertTrue(jugada.agregarJugada("1 a 3"));
+        assertTrue(juego.agregarJugada("1 a 3"));
     }
 
     @Test
     public void siSeIngresaUnaJugadaVerificarSiEsInvalida() {
-        assertFalse(jugada.agregarJugada("1 a 1"));
+        assertFalse(juego.agregarJugada("1 a 1"));
     }
 
     @Test
     public void siSeIngresaUnaJugadaVerificarSiEstaEscritaCorrectamente() {
-        assertFalse(jugada.agregarJugada("r a 12"));
+        assertFalse(juego.agregarJugada("r a 12"));
     }
 
     @Test
     public void seDebeGuardarLasJugadasValidas() {
         tablero.quitarTaco(3);
-        jugada.agregarJugada("1 a 3");
-        assertEquals(1, jugada.getCantidadJugadas());
+        juego.agregarJugada("1 a 3");
+        assertEquals(1, juego.getCantidadJugadas());
     }
 
     @Test
     public void siLaJugadaEsValidaSeDebeEjecutarElSaltoDelTaco() {
-        jugada.elegirAgujero(4);
+        juego.elegirAgujero(4);
         System.out.println(tablero.mostrar());
-        jugada.agregarJugada("11 a 4");
+        juego.agregarJugada("11 a 4");
         System.out.println(tablero.mostrar());
         assertEquals(13, tablero.getCantidadTacos());
     }
@@ -72,19 +72,26 @@ public class JuegoTest {
             tablero.quitarTaco(i);
         }
         tablero.quitarTaco(14);
-        assertTrue(jugada.juegoTerminado());
+        assertTrue(juego.juegoTerminado());
     }
 
     @Test
     public void elJugadorPersonaDebePoderElegirDondeEstaraElAgujeroParaEmpezar() {
-        jugada.elegirAgujero(3);
+        juego.elegirAgujero(3);
         assertFalse(tablero.getPosicion(2));
     }
 
     @Test
     public void elJugadorNoDebePoderElegirComoAgujeroParaEmpezarElJuegoNingunaEsquina() {
-        assertFalse(jugada.elegirAgujero(1));
-        assertFalse(jugada.elegirAgujero(5));
-        assertFalse(jugada.elegirAgujero(15));
+        assertFalse(juego.elegirAgujero(1));
+        assertFalse(juego.elegirAgujero(5));
+        assertFalse(juego.elegirAgujero(15));
+    }
+
+    @Test
+    public void debeExistirAutomatizacionDeJugadasParaElJugadorComputador() {
+        juego.elegirAgujero(8);
+        juego.computadorJuega();
+        assertTrue(juego.juegoTerminado());
     }
 }
