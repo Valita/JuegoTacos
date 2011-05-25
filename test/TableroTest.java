@@ -104,4 +104,27 @@ public class TableroTest {
         assertEquals(13, tablero.getCantidadTacos());
 
     }
+
+    @Test
+    public void elJugadorPersonaDebePoderElegirDondeEstaraElAgujeroParaEmpezar() {
+        tablero.elegirAgujero(3);
+        assertFalse(tablero.getPosicion(3));
+    }
+
+    @Test
+    public void elJugadorNoDebePoderElegirComoAgujeroParaEmpezarElJuegoNingunaEsquina() {
+        assertFalse(tablero.elegirAgujero(1));
+        assertFalse(tablero.elegirAgujero(5));
+        assertFalse(tablero.elegirAgujero(15));
+    }
+
+    @Test
+    public void unJugadorDebeSaberCuandoElJuegoATerminado() {
+        for(int i =1 ; i<=12 ; i++)
+        {
+            tablero.quitarTaco(i);
+        }
+        tablero.quitarTaco(15);
+        assertTrue(tablero.juegoTerminado());
+    }
 }
