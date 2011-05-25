@@ -98,11 +98,17 @@ public class TableroTest {
     @Test
     public void siElComandoEsValidoSeDebeEjecutarElSaltoDelTaco() {
         System.out.println(tablero.mostrar());
-        tablero.quitarTaco(3);
-        tablero.agregarComando("12 a 3");
+        tablero.quitarTaco(4);
+        tablero.agregarComando("11 a 4");
         System.out.println(tablero.mostrar());
         assertEquals(13,tablero.getCantidadTacos());
 
+    }
+
+    @Test
+    public void elJugadorPersonaDebePoderElegirDondeEstaraElAgujeroParaEmpezar()
+    {
+        
     }
     
 }
