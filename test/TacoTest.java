@@ -1,15 +1,7 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-/**
- *
- * @author Scout
- */
 public class TacoTest {
 
     Taco taco = new Taco();
@@ -67,6 +59,9 @@ public class TacoTest {
         assertEquals("7 11/9 12", taco.obtenerSaltos());
         taco.definirPosicion(15);
         assertEquals("10 13/12 14", taco.obtenerSaltos());
+<<<<<<< HEAD
 
+=======
+>>>>>>> 4ef9b486cab6415e757477a4fb767a0e62168577
     }
 }

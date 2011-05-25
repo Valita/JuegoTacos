@@ -15,28 +15,13 @@ public class TableroTest {
     }
 
     @Test
-    public void comenzandoElJuegoNoDeboTenerNingunJugadorDefinido() {
-        assertFalse(tablero.jugadorComputador());
-        assertFalse(tablero.jugadorHumano());
-    }
-
-    @Test
-    public void alElegirUnJugadorElTableroDebeSaberQueEseJugadorEstaSeleccionado() {
-        tablero.elegirJugador("Humano");
-        assertTrue(tablero.jugadorHumano());
-        tablero.elegirJugador("Computador");
-        assertTrue(tablero.jugadorComputador());
-    }
-
-    @Test
-    public void alCrearUntableroDebeEstarVacio() {
+    public void alCrearUnTableroDebeEstarVacio() {
         Tablero tableroVacio = new Tablero();
         assertEquals(0, tableroVacio.getCantidadTacos());
     }
 
     @Test
     public void alComenzarElJuegoElTableroDebeEstarLleno() {
-
         assertEquals(15, tablero.getCantidadTacos());
     }
 
@@ -60,17 +45,12 @@ public class TableroTest {
     }
 
     @Test
-    public void sePuedeIngresarUncomando() {
-        tablero.quitarTaco(3);
-        assertTrue(tablero.agregarComando("1 a 3"));
-    }
-
-    @Test
     public void siUnTacoExisteEnUnaPosicionDebeTenerUnColor() {
         if (tablero.getExistenciaEnPosicion(1)) {
             assertNotSame("", tablero.getColorTaco(1));
         }
     }
+<<<<<<< HEAD
 
     @Test
     public void seDebeGuardarLosComandosValidos() {
@@ -133,4 +113,6 @@ public class TableroTest {
         tablero.computadorJuega();
         assertTrue(tablero.juegoTerminado());
     }
+=======
+>>>>>>> 4ef9b486cab6415e757477a4fb767a0e62168577
 }

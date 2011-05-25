@@ -3,24 +3,15 @@ import java.util.ArrayList;
 
 public class Tablero {
 
-    private static final int ULTIMA_LINEA = 14;
     private static final int FIN_LINEA_CUATRO = 13;
     private static final int FIN_LINEA_TRES = 11;
     private static final int FIN_LINEA_DOS = 8;
     private static final int FIN_LINEA_UNO = 4;
-    private boolean humano;
-    private boolean computador;
     private int cantidadTacos;
     private ArrayList<Taco> listaTacos = new ArrayList<Taco>();
-    private ArrayList<String> listaComandos = new ArrayList<String>();
 
     public Tablero() {
-
-
-        humano = false;
-        computador = false;
         cantidadTacos = 0;
-
     }
 
     private void colorearTacos() {
@@ -34,18 +25,14 @@ public class Tablero {
             if (contadorRojo < 5 && randomico == 1) {
                 listaTacos.get(i).definirColor("R");
                 contadorRojo++;
+            } else if (contadorAmarillo < 5 && randomico == 2) {
+                listaTacos.get(i).definirColor("A");
+                contadorAmarillo++;
+            } else if (contadorBlanco < 5 && randomico == 3) {
+                listaTacos.get(i).definirColor("B");
+                contadorBlanco++;
             } else {
-                if (contadorAmarillo < 5 && randomico == 2) {
-                    listaTacos.get(i).definirColor("A");
-                    contadorAmarillo++;
-                } else {
-                    if (contadorBlanco < 5 && randomico == 3) {
-                        listaTacos.get(i).definirColor("B");
-                        contadorBlanco++;
-                    } else {
-                        i--;
-                    }
-                }
+                i--;
             }
         }
         for (int i = 0; i < 15; i++) {
@@ -56,29 +43,12 @@ public class Tablero {
         }
     }
 
-    public boolean jugadorHumano() {
-        return humano;
-    }
-
-    public boolean jugadorComputador() {
-        return computador;
-    }
-
-    public void elegirJugador(String jugador) {
-        if (jugador.equalsIgnoreCase("Humano")) {
-            humano = true;
-        } else {
-            computador = true;
-        }
-    }
-
     public int getCantidadTacos() {
         return cantidadTacos;
     }
 
     public void llenarTablero() {
         for (int i = 0; i < 15; i++) {
-
             listaTacos.add(new Taco());
             listaTacos.get(i).definirExistencia(true);
             listaTacos.get(i).definirPosicion(i + 1);
@@ -88,28 +58,37 @@ public class Tablero {
     }
 
     public void quitarTaco(int posicion) {
-        listaTacos.get(posicion - 1).definirExistencia(false);
+        listaTacos.get(posicion).definirExistencia(false);
         cantidadTacos--;
     }
 
+<<<<<<< HEAD
     public boolean getExistenciaEnPosicion(int posicion) {
         return listaTacos.get(posicion - 1).obtenerExistencia();
+=======
+    public boolean getPosicion(int posicion) {
+        return listaTacos.get(posicion).obtenerExistencia();
+>>>>>>> 4ef9b486cab6415e757477a4fb767a0e62168577
     }
 
     public String getColorTaco(int posicion) {
-        return listaTacos.get(posicion - 1).obtenerColor();
+        return listaTacos.get(posicion).obtenerColor();
     }
 
-    public String imprimirLetras(int cantidadPosiciones, int posInicial) {
+    private String imprimirLetras(int cantidadPosiciones, int posInicial) {
         String imprimir = " ";
         for (int pos = posInicial; pos < cantidadPosiciones + posInicial; pos++) {
-            imprimir += getColorTaco(pos + 1) + "  ";
+            if (this.getPosicion(pos)) {
+                imprimir += this.getColorTaco(pos) + "  ";
+            } else {
+                imprimir += "0  ";
+            }
         }
         imprimir += "\n";
         return imprimir;
     }
 
-    public String imprimirPosiciones(int cantidadPosiciones, int posInicial) {
+    private String imprimirPosiciones(int cantidadPosiciones, int posInicial) {
         String imprimir = " ";
         for (int pos = posInicial; pos < cantidadPosiciones + posInicial; pos++) {
             imprimir += listaTacos.get(pos).obtenerPosicion();
@@ -146,86 +125,7 @@ public class Tablero {
         return cadenaTablero;
     }
 
-    public boolean agregarComando(String comando) {
-
-        if (validarComando(comando)) {
-            listaComandos.add(comando);
-            return true;
-        } else {
-            System.out.println("Comando invalido");
-            return false;
-        }
-    }
-
-    private boolean verificarEscrituraComando(String comando) {
-        boolean parteUno = false;
-        boolean parteDos = false;
-        String[] entrada = comando.split(" ");
-        if (entrada.length != 3) {
-            return false;
-        }
-        if (!entrada[1].equals("a")) {
-            return false;
-        }
-        for (int num = 1; num < 16; num++) {
-            if (entrada[0].equals(String.valueOf(num))) {
-                parteUno = true;
-            }
-            if (entrada[2].equals(String.valueOf(num))) {
-                parteDos = true;
-            }
-        }
-        if (parteDos && parteUno) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    private boolean validarComando(String comando) {
-        if (verificarEscrituraComando(comando)) {
-            String[] jugada;
-
-            int pInicialSalto = primerCaracter(comando);
-            int pFinalSalto = tercerCaracter(comando);
-            int pMedioSalto;
-
-            String saltosPosibles = listaTacos.get(pInicialSalto - 1).obtenerSaltos();
-            jugada = saltosPosibles.split("/");
-            for (String s : jugada) {
-                if (pFinalSalto == primerCaracter(s)) {
-                    pMedioSalto = segundoCaracter(s);
-                    saltar(pInicialSalto, pFinalSalto, pMedioSalto);
-                    return true;
-                }
-            }
-            return false;
-
-        } else {
-            return false;
-        }
-    }
-
-    private int primerCaracter(String comando) {
-        String[] jugada = comando.split(" ");
-        return Integer.parseInt(jugada[0]);
-    }
-
-    private int tercerCaracter(String comando) {
-        String[] jugada = comando.split(" ");
-        return Integer.parseInt(jugada[2]);
-    }
-
-    private int segundoCaracter(String comando) {
-        String[] jugada = comando.split(" ");
-        return Integer.parseInt(jugada[1]);
-    }
-
-    public int getCantidadComandos() {
-        return listaComandos.size();
-    }
-
-    public boolean saltar(int pInicial, int pFinal, int pMedio) {
+    public void saltar(int pInicial, int pFinal, int pMedio) {
         listaTacos.get(pFinal - 1).definirColor(getColorTaco(pInicial));
         quitarTaco(pInicial);
         cantidadTacos++;
@@ -233,26 +133,13 @@ public class Tablero {
         quitarTaco(pMedio);
         listaTacos.get(pMedio - 1).definirColor("0");
         listaTacos.get(pFinal - 1).definirExistencia(true);
-        return true;
     }
 
-    public boolean elegirAgujero(int pos) {
-        if (validarPosicionAgujero(pos)) {
-            quitarTaco(pos);
-            return true;
-        } else {
-            return false;
-        }
+    public String obtenerSaltos(int i) {
+        return listaTacos.get(i).obtenerSaltos();
     }
 
-    public boolean validarPosicionAgujero(int pos) {
-        if (pos != 1 && pos != 5 && pos != 15) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
+<<<<<<< HEAD
     public boolean juegoTerminado() {
         boolean terminado = true;
         if (cantidadTacos == 1) {
@@ -266,13 +153,22 @@ public class Tablero {
                         if (getExistenciaEnPosicion(segundoCaracter(s))) {
                             terminado = false;
                         }
+=======
+    public boolean terminado() {
+        for (Taco t : listaTacos) {
+            if (t.obtenerExistencia()) {
+                String[] jugada = t.obtenerSaltos().split("/");
+                for (String s : jugada) {
+                    String[] pos = s.split(" ");
+                    int p = Integer.parseInt(pos[1]) - 1;
+                    if (this.getPosicion(p)) {
+                        return false;
+>>>>>>> 4ef9b486cab6415e757477a4fb767a0e62168577
                     }
                 }
             }
-            return terminado;
-        } else {
-            return false;
         }
+        return true;
     }
 
     private int posicionVaciaAJugar() {
