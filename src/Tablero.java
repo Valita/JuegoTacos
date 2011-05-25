@@ -103,13 +103,13 @@ public class Tablero {
         String imprimir = " ";
         for (int pos = posInicial; pos < cantidadPosiciones + posInicial; pos++) {
             if (getPosicion(pos)) {
-                
-                    imprimir += getColorTaco(pos) + "  ";
-                
+
+                imprimir += getColorTaco(pos) + "  ";
+
             } else {
-          
-                    imprimir += "0  ";
-                
+
+                imprimir += "0  ";
+
             }
         }
         imprimir += "\n";
