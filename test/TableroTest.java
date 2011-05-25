@@ -49,7 +49,7 @@ public class TableroTest {
     @Test
     public void siSeQuitaUnTacoDeUnaPosicionEsaPosicionDebeQuedarVacia() {
         tablero.quitarTaco(3);
-        assertFalse(tablero.getPosicion(3));
+        assertFalse(tablero.getExistenciaEnPosicion(3));
     }
 
     @Test
@@ -67,7 +67,7 @@ public class TableroTest {
 
     @Test
     public void siUnTacoExisteEnUnaPosicionDebeTenerUnColor() {
-        if (tablero.getPosicion(1)) {
+        if (tablero.getExistenciaEnPosicion(1)) {
             assertNotSame("", tablero.getColorTaco(1));
         }
     }
@@ -108,7 +108,7 @@ public class TableroTest {
     @Test
     public void elJugadorPersonaDebePoderElegirDondeEstaraElAgujeroParaEmpezar() {
         tablero.elegirAgujero(3);
-        assertFalse(tablero.getPosicion(3));
+        assertFalse(tablero.getExistenciaEnPosicion(3));
     }
 
     @Test
@@ -120,11 +120,17 @@ public class TableroTest {
 
     @Test
     public void unJugadorDebeSaberCuandoElJuegoATerminado() {
-        for(int i =1 ; i<=12 ; i++)
-        {
+        for (int i = 1; i <= 12; i++) {
             tablero.quitarTaco(i);
         }
         tablero.quitarTaco(15);
+        assertTrue(tablero.juegoTerminado());
+    }
+
+    @Test
+    public void debeExistirAutomatizacionDeJugadasParaElJugadorComputador() {
+        tablero.elegirAgujero(8);
+        tablero.computadorJuega();
         assertTrue(tablero.juegoTerminado());
     }
 }

@@ -92,7 +92,7 @@ public class Tablero {
         cantidadTacos--;
     }
 
-    public boolean getPosicion(int posicion) {
+    public boolean getExistenciaEnPosicion(int posicion) {
         return listaTacos.get(posicion - 1).obtenerExistencia();
     }
 
@@ -259,17 +259,99 @@ public class Tablero {
             return true;
         }
         if (cantidadTacos <= 4) {
-            for(Taco t:listaTacos){
-                if(t.obtenerExistencia()){
+            for (Taco t : listaTacos) {
+                if (t.obtenerExistencia()) {
                     String[] jugada = t.obtenerSaltos().split("/");
-                    for(String s:jugada){
-                        if(getPosicion(segundoCaracter(s))) terminado = false;
+                    for (String s : jugada) {
+                        if (getExistenciaEnPosicion(segundoCaracter(s))) {
+                            terminado = false;
+                        }
                     }
                 }
             }
             return terminado;
         } else {
             return false;
+        }
+    }
+
+    private int posicionVaciaAJugar() {
+        ArrayList<Integer> vacios = new ArrayList<Integer>();
+        int cantidadVacios=0;
+        int elegible;
+        int posicion=0;
+        boolean existejugada = false;
+
+        for (Taco vacio : listaTacos) {
+            if (vacio.obtenerExistencia() == false) {
+                vacios.add(vacio.obtenerPosicion());
+                cantidadVacios++;
+                existejugada = true;
+            }
+        }
+        if (!existejugada) {
+            return 0;
+        }
+        if (cantidadTacos != 14) {
+            elegible = (int) (Math.random() * (cantidadVacios));
+            posicion = vacios.get(elegible);
+        }
+        if(cantidadTacos == 14) {
+            posicion = vacios.get(0);
+        }
+        return posicion;
+    }
+
+    private int posicionParaMover(int vacio) {
+        String saltosPosibles = listaTacos.get(vacio - 1).obtenerSaltos();
+        String[] saltos = saltosPosibles.split("/");
+        ArrayList<Integer> elegibles = new ArrayList<Integer>();
+        int tacoAMover;
+        int tacoMedio;
+        int contador = 0;
+        int elegido;
+
+        for (String salto : saltos) {
+            tacoAMover = primerCaracter(salto);
+            tacoMedio = segundoCaracter(salto);
+            if (getExistenciaEnPosicion(tacoAMover) && getExistenciaEnPosicion(tacoMedio)) {
+                elegibles.add(tacoAMover);
+                contador++;
+            }
+        }
+        if (contador == 1) {
+            return elegibles.get(0);
+
+        }
+        if (contador == 0) {
+            return 0;
+        } else {
+            elegido = (int) (Math.random() * contador);
+            return elegibles.get(elegido);
+        }
+    }
+
+    private String obtenerJugada() {
+        int jugarVacio = 0;
+        int jugarTaco = 0;
+        String jugada = "";
+        while (jugarTaco == 0) {
+            jugarVacio = posicionVaciaAJugar();
+            if (jugarVacio != 0) {
+                jugarTaco = posicionParaMover(jugarVacio);
+            } else {
+                jugarTaco = 0;
+            }
+        }
+        jugada += Integer.toString(jugarTaco) + " a " + Integer.toString(jugarVacio);
+        return jugada;
+    }
+
+    public void computadorJuega() {
+        String jugada;
+        while (!juegoTerminado()) {
+            jugada = obtenerJugada();
+            agregarComando(jugada);
         }
     }
 }
